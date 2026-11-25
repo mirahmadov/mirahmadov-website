@@ -1,12 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { MessageProvider } from "@/components/message-provider";
-import Wrapper from "@/components/wrapper";
 
 export const metadata: Metadata = {
-  title: "MIRAHMADOV",
-  description: "Mirahmadov - website",
+  title: "mirahmadov",
+  description: "A quiet place.",
+  authors: [{ name: "Muhammadaziz Mirakhmadov" }],
+  openGraph: {
+    title: "mirahmadov",
+    description: "A quiet place.",
+    url: "https://mirahmadov.uz",
+    siteName: "mirahmadov",
+    type: "website",
+  },
 };
+
+export const viewport: Viewport = { themeColor: "#0b0f14" };
 
 export default function RootLayout({
   children,
@@ -14,15 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uz">
-      <body
-      >
-        <Wrapper>
-          {children}
-        </Wrapper>
-        
-        <MessageProvider />
-      </body>
+    <html lang="en">
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

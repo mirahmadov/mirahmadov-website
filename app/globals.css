@@ -1,54 +1,47 @@
 @import "tailwindcss";
 
-@theme {
-    --color-primary: oklch(67.05% 0.189 44.87);
-    /* --color-black: oklch(25.20% 0.000 0); */
-    --color-black: oklch(37.19% 0.066 219.60);
-    --color-background-dark: oklch(0.1608 0.0392 288.44);
-    --color-background-light: oklch(0.2617 0.0335 286.38);
-    /* #232234 */
-}
-
-@font-face {
-    font-family: 'Havelock';
-    src: url('./../public/fonts/Havelock-Titling-Medium.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
-html {
-    background: #232234;
-}
-
-body {
+html, body {
+    margin: 0;
+    height: 100%;
+    background: #0b0f14;
     color: #fff;
 }
 
-.font-havelock {
-    font-family: 'Havelock', sans-serif !important;
+/* CV panel: a paper sheet that slides up slowly. */
+.cv-sheet {
+    margin: auto auto 0;
+    width: min(36rem, 100%);
+    max-height: 85dvh;
+    border: 0;
+    border-radius: 12px 12px 0 0;
+    background: #f4efe6;
+    padding: 0;
+    overflow-y: auto;
+    transition: transform 0.9s ease, opacity 0.9s ease, overlay 0.9s allow-discrete, display 0.9s allow-discrete;
+    transform: translateY(40px);
+    opacity: 0;
+}
+.cv-sheet[open] {
+    transform: none;
+    opacity: 1;
+}
+@starting-style {
+    .cv-sheet[open] { transform: translateY(40px); opacity: 0; }
+}
+.cv-sheet::backdrop {
+    background: rgba(5, 8, 12, 0.35);
 }
 
-/* Add this to your global CSS file */
-.scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-    /* For Chrome, Safari, and Edge */
+/* Very slow drift of the background picture. */
+@keyframes drift {
+    from { transform: scale(1); }
+    to { transform: scale(1.06) translate3d(-1%, -0.5%, 0); }
+}
+.drift {
+    animation: drift 60s ease-in-out infinite alternate;
 }
 
-.scrollbar-hidden {
-    -ms-overflow-style: none;
-    /* For Internet Explorer and Edge */
-    scrollbar-width: none;
-    /* For Firefox */
-}
-
-@keyframes pipe {
-  0% {
-    transform: translateX(-150%);
-  }
-  100% {
-    transform: translateX(500%);
-  }
-}
-.animate-pipe {
-  animation: pipe 3s linear infinite;
+@media (prefers-reduced-motion: reduce) {
+    .drift { animation: none; }
+    .cv-sheet { transition: none; }
 }
